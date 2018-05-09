@@ -156,6 +156,16 @@ static const uint8_t BITS = 32;
     return [NSString stringWithFormat:@"%@.in-addr.arpa.", [[[_parsedAddress reverseObjectEnumerator] allObjects] componentsJoinedByString:@"."]];
 }
 
+- (NSData *)data {
+    uint8_t bytes[4] = {
+        (uint8_t)atoi([_parsedAddress[0] UTF8String]),
+        (uint8_t)atoi([_parsedAddress[1] UTF8String]),
+        (uint8_t)atoi([_parsedAddress[2] UTF8String]),
+        (uint8_t)atoi([_parsedAddress[3] UTF8String]),
+    };
+    return [NSData dataWithBytes:&bytes length:4];
+}
+
 #pragma mark Properties
 
 - (uint8_t)groups { return 4; }

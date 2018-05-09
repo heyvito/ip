@@ -403,6 +403,21 @@ const static uint8_t GROUPS = 8;
     return reversed;
 }
 
+- (NSData *)data {
+    NSString *hex = [self.bigInteger toStringWithRadix:16];
+    char buf[3];
+    buf[2] = '\0';
+    unsigned char *bytes = malloc([hex length] / 2);
+    unsigned char *bp = bytes;
+    for (CFIndex i = 0; i < [hex length]; i += 2) {
+        buf[0] = [hex characterAtIndex:i];
+        buf[1] = [hex characterAtIndex:i+1];
+        char *b2 = NULL;
+        *bp++ = strtol(buf, &b2, 16);
+    }
+    return [NSData dataWithBytesNoCopy:bytes length:[hex length]/2 freeWhenDone:YES];
+}
+
 #pragma mark Properties
 
 - (BOOL)valid { return _valid; }

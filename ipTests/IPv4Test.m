@@ -132,4 +132,11 @@
     XCTAssert([[addrs address] isEqualToString:@"10.0.1.1"]);
 }
 
+- (void)testData {
+    uint8_t bytes[4] = {0x0a, 0x00, 0x01, 0x01};
+    NSData *data = [NSData dataWithBytes:bytes length:4];
+    IPv4 *address = [[IPv4 alloc] initWithAddress:@"10.0.1.1"];
+    XCTAssert([address.data isEqualToData:data]);
+}
+
 @end

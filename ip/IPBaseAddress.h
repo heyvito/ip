@@ -174,6 +174,14 @@
  */
 - (nonnull NSString *)reversedForm;
 
+
+/**
+ Provides a representation of the current address as an NSData object
+
+ @return a NSData object containing the representation of this address
+ */
+- (nonnull NSData *)data;
+
 @optional
 
 

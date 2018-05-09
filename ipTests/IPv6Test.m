@@ -112,4 +112,13 @@
     IPAddress *addrs = [IPAddress addressWithData:data];
     XCTAssert([[addrs correctForm] isEqualToString:@"2001:db8::1:0:0:1"]);
 }
+
+- (void)testData {
+    uint8_t bytes[16] = {0x20, 0x01, 0x0d, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01};
+    NSData *data = [NSData dataWithBytes:bytes length:16];
+    IPv6 *addrs = [[IPv6 alloc] initWithAddress:@"2001:db8::1:0:0:1"];
+    XCTAssert([addrs.data isEqualToData:data]);
+}
+
 @end
