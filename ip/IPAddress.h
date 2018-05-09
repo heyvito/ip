@@ -12,6 +12,18 @@
 @interface IPAddress : NSObject <IPBaseAddress>
 
 
+
+/**
+ Initialises a new IPAddress instance, by checking the provided data length and
+ then initialising either a IPv4 or IPv6 instance.
+
+ @param aData Data representing the address to be parsed
+ @return A new instance of IPAddress retaining either a IPv4 or IPv6 address
+ @throws A NSException representing an argument error when the provided data
+ length does not correspond an IPv4 nor an IPv6 address
+ */
++ (instancetype)addressWithData:(nonnull NSData *)aData;
+
 /**
  Initialises a new IPAddress instance, by first attempting to parse the given
  address as an IPv4 address, and falling back to IPv6 in case it cannot be

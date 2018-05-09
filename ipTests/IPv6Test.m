@@ -104,4 +104,12 @@
     IPv6 *address = [[IPv6 alloc] initWithAddress:@"2001:4860:4001:803::1011"];
     XCTAssert([[address reversedForm] isEqualToString:@"1.1.0.1.0.0.0.0.0.0.0.0.0.0.0.0.3.0.8.0.1.0.0.4.0.6.8.4.1.0.0.2.ip6.arpa."]);
 }
+
+- (void)testFromByteArray {
+    uint8_t bytes[16] = {0x20, 0x01, 0x0d, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00,
+                         0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01};
+    NSData *data = [NSData dataWithBytes:bytes length:16];
+    IPAddress *addrs = [IPAddress addressWithData:data];
+    XCTAssert([[addrs correctForm] isEqualToString:@"2001:db8::1:0:0:1"]);
+}
 @end

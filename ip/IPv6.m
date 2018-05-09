@@ -322,7 +322,7 @@ const static uint8_t GROUPS = 8;
 }
 
 + (instancetype)fromBigInteger:(nonnull BigInt *)aBigInteger {
-    NSString *hex = [[aBigInteger toStringWithRadix:16] stringByPaddingLeftToLength:32 withString:@"0"];
+    NSString *hex = [[[aBigInteger toStringWithRadix:16] stringByPaddingLeftToLength:32 withString:@"0"] lowercaseString];
     NSMutableArray<NSString *> *groups = [[NSMutableArray alloc] init];
     for(int i = 0; i < 8; i++) {
         [groups addObject:[hex substringWithRange:NSMakeRange(i * 4, 4)]];

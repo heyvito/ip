@@ -29,6 +29,37 @@
     return self;
 }
 
+- (instancetype)initWithIP:(id<IPBaseAddress>)anAddress {
+    if((self = [super init]) == nil) return self;
+    addrs = anAddress;
+    return self;
+}
+
++ (instancetype)addressWithData:(NSData *)aData {
+    if(aData.length == 4) { // IPv4
+        uint8_t bytes[4];
+        [aData getBytes:bytes length:4];
+        int address = bytes[3];
+        address |= bytes[2] << 8;
+        address |= bytes[1] << 16;
+        address |= bytes[0] << 24;
+        address &= 0x0FFFFFFFF;
+        return [[self alloc] initWithIP:[IPv4 ipv4FromInteger:address]];
+    } else if(aData.length == 16) { //IPv6
+        NSUInteger dataLength = aData.length;
+        NSMutableString *string = [NSMutableString stringWithCapacity:dataLength*2];
+        const unsigned char *dataBytes = [aData bytes];
+        for (NSInteger idx = 0; idx < dataLength; ++idx) {
+            [string appendFormat:@"%02x", dataBytes[idx]];
+        }
+        return [[self alloc] initWithIP:[IPv6 fromBigInteger:[[BigInt alloc] initWithString:string andRadix:16]]];
+    } else {
+        @throw [NSException exceptionWithName:@"ipInvalidLength"
+                                       reason:@"The provided data length does not correspond to neighter a IPv4 nor a IPv6 address"
+                                     userInfo:nil];
+    }
+}
+
 - (BOOL)valid { return addrs.valid; }
 - (BOOL)correct { return addrs.correct; }
 - (NSString *)error { return addrs.error; }

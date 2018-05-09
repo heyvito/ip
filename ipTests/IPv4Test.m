@@ -125,4 +125,11 @@
     XCTAssert([[address reversedForm] isEqualToString:@"4.4.8.8.in-addr.arpa."]);
 }
 
+- (void)testFromByteArray {
+    uint8_t bytes[4] = {0x0a, 0x00, 0x01, 0x01};
+    NSData *data = [NSData dataWithBytes:bytes length:4];
+    IPAddress *addrs = [IPAddress addressWithData:data];
+    XCTAssert([[addrs address] isEqualToString:@"10.0.1.1"]);
+}
+
 @end
