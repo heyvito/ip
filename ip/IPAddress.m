@@ -81,5 +81,7 @@
 - (BOOL)isInSubnet:(id<IPBaseAddress>)anAddress { return [addrs isInSubnet:anAddress]; }
 - (nonnull NSString *)binaryZeroPad { return [addrs binaryZeroPad]; }
 - (NSString *)reversedForm { return [addrs reversedForm]; }
+- (nonnull NSData *)data { return [addrs data]; }
+
 
 @end
